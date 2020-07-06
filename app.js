@@ -25,11 +25,7 @@ const app = express();
 //define o dominio de origem para consumo do servico
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: 'https://vast-depths-87069.herokuapp.com/',
-  })
-);
+app.use(cors());
 
 app.use(gradeRouter);
 
