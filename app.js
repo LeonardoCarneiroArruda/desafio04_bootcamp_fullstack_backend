@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: 'http://localhost:3001',
+    origin: 'https://vast-depths-87069.herokuapp.com/',
   })
 );
 
