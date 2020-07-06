@@ -18,13 +18,6 @@ const create = async (req, res) => {
 };
 
 const findAll = async (req, res) => {
-  //const name = req.query.name;
-
-  //condicao para o filtro no findAll
-  //var condition = name
-   // ? { name: { $regex: new RegExp(name), $options: 'i' } }
-   // : {};
-
   try {
     const student = await studentModel.find({});
     res.send(student);
@@ -34,6 +27,28 @@ const findAll = async (req, res) => {
       .status(500)
       .send({ message: error.message || 'Erro ao listar todos os documentos' });
     logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
+  }
+};
+
+
+const findByName = async (req, res) => {
+  const name = req.params.name;
+
+  //condicao para o filtro no findAll
+  var condition = name !== 'TODOS'
+   ? { name: { $regex: new RegExp(name), $options: 'i' } }
+   : {};
+
+  try {
+    const student = await studentModel.find(condition);
+    console.log(student);
+    res.send(student);
+    logger.info(`GET /grade/pesquisa-nome/${name}`);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: error.message || 'Erro ao listar todos os documentos' });
+    logger.error(`GET /grade/pesquisa-nome - ${JSON.stringify(error.message)}`);
   }
 };
 
@@ -111,4 +126,5 @@ const removeAll = async (req, res) => {
   }
 };
 
-export default { create, findAll, findOne, update, remove, removeAll };
+
+export default { create, findAll, findOne, update, remove, removeAll, findByName };
